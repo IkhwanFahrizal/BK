@@ -18,11 +18,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         // Membandingkan nomor rekam medis dari input dengan database
         if ($no_rm === $row['no_rm']) {
             $_SESSION['nama_pasien'] = $row['nama_pasien'];
+            $_SESSION['id_pasien'] = $row['id_pasien']; // Menyimpan ID pasien ke dalam session
+            $_SESSION['id_pasien'] = $row['id']; // Menyimpan ID pasien ke dalam session
+
             header("Location: index.php");
             exit;
         } else {
             $error = "Nomor Rekam Medis salah";
         }
+        
     } else {
         $error = "Nomor Rekam Medis Tidak ditemukan";
     }

@@ -1,7 +1,4 @@
 <?php
-
-include_once("../koneksi.php");
-
 session_start();
 
 if (!isset($_SESSION['nip'])) {
@@ -76,9 +73,9 @@ $conn->close();
 
 <body>
 
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">Sistem Informasi Rumah Sakit</a>
+            <a class="navbar-brand" href="#">Sistem Informasi Poliklinik</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-bs-target="#navbarNavDropdown"
                 aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -100,6 +97,9 @@ $conn->close();
                                 <li>
                                     <a class="dropdown-item" href="ubah_profil.php?page=ubah_profil">Ubah Profil Dokter</a>
                                     <a class="dropdown-item" href="atur_jadwal.php?page=atur_jadwal">Atur jadwal poli</a>
+                                    <a class="dropdown-item" href="jadwal_periksa.php?page=jadwal_periksa">Jadwal Saya</a>
+                                    <a class="dropdown-item" href="cek_riwayat.php?page=poli">Cari Riwayat Pasien</a>
+                                    <!-- <a class="dropdown-item" href="cari_pasien.php?page=pasien">Cari Pasien</a> -->
                                 </li>
                             </ul>
                         </li>
@@ -113,8 +113,8 @@ $conn->close();
                     ?>
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="Logout.php">Logout (
-                                <?php echo $_SESSION['nip'] ?>)
+                            <a class="nav-link" href="Logout.php">Logout
+                                (<?php echo isset($_SESSION['nama_dokter']) ? $_SESSION['nama_dokter'] : $_SESSION['nip'] ?>)
                             </a>
                         </li>
                     </ul>
@@ -126,10 +126,21 @@ $conn->close();
                         <li class="nav-item">
                             <a class="nav-link" href="index.php?page=loginDokter">Login</a>
                         </li>
+                        <!-- <li class="nav-item">
+                            <a class="nav-link" href="index.php?page=registerDokter">Registrasi Pasien</a>
+                        </li> -->
                     </ul>
                     <?php
                 }
                 ?>
+                <!-- <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="index.php?page=registerAdmin">Register</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="index.php?page=loginAdmin">Login</a>
+                </li>
+            </ul> -->
             </div>
         </div>
     </nav>

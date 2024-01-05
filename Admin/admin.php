@@ -1,6 +1,6 @@
 <?php
-
 include_once("../koneksi.php");
+
 
 if (!isset($_SESSION)) {
     session_start();
@@ -47,9 +47,6 @@ if (isset($_GET['aksi'])) {
                 </script>";
 }
 ?>
-
-<html lang="en">
-
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -59,7 +56,6 @@ if (isset($_GET['aksi'])) {
 </head>
 
 <body>
-
 <center><h2>Admin</h2></center>
 <br>
 <div class="container">
@@ -102,7 +98,7 @@ if (isset($_GET['aksi'])) {
         </div>
         <div class="row mt-3">
             <div class=col>
-                <button type="submit" class="btn btn-primary rounded-pill px-3 mt-auto" name="simpan" onclick="showNotification()">Simpan</button>
+                <button type="submit" class="btn btn-primary rounded-pill px-3 mt-auto" name="simpan">Simpan</button>
             </div>
         </div>
     </form>

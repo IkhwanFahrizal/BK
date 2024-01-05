@@ -1,7 +1,4 @@
 <?php
-
-include_once("../koneksi.php");
-
 if (!isset($_SESSION)) {
     session_start();
 }
@@ -22,6 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $row = $result->fetch_assoc();
         if (password_verify($sandi_dokter, $row['sandi_dokter'])) {
             $_SESSION['nip'] = $nip;
+            $_SESSION['nama_dokter'] = $row['nama_dokter']; // Simpan nama_dokter di session
             header("Location: index.php");
         } else {
             $error = "Password salah";
@@ -29,6 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     } else {
         $error = "Dokter tidak ditemukan";
     }
+    
 }
 ?>
 

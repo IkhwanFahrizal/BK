@@ -1,7 +1,4 @@
 <?php
-
-include_once("../koneksi.php");
-
 session_start();
 if (isset($_SESSION['username'])) {
     // Hapus session

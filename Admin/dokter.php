@@ -1,5 +1,4 @@
 <?php
-
 include_once("../koneksi.php");
 
 if (!isset($_SESSION)) {
@@ -59,9 +58,6 @@ if (isset($_GET['aksi'])) {
                 </script>";
 }
 ?>
-
-<html lang="en">
-
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -128,17 +124,17 @@ if (isset($_GET['aksi'])) {
                     value="<?php echo $nohp ?>">
             </div>
         </div>
-        <div class="row mt-1">
-            <label for="inputHarga" class="form-label fw-bold">
+        <!-- <div class="row mt-1">
+            <label for="inputIDpoli" class="form-label fw-bold">
                 ID Poli
             </label>
             <div>
                 <input type="text" class="form-control" name="id_poli" id="inputIDpoli" placeholder="ID Poli"
                     value="<?php echo $idpoli ?>">
             </div>
-        </div>
+        </div> -->
         <div class="row mt-1">
-            <label for="inputHarga" class="form-label fw-bold">
+            <label for="inputNIP" class="form-label fw-bold">
                 NIP
             </label>
             <div>
@@ -146,6 +142,27 @@ if (isset($_GET['aksi'])) {
                     value="<?php echo $nip ?>">
             </div>
         </div>
+        <div class="row mt-1">
+            <label for="inputHarga" class="form-label fw-bold">
+                Nama Poli
+            </label>
+            <div>
+                <select class="form-control" name="id_poli" id="inputIDpoli">
+                    <?php
+                    $ambil_poli = mysqli_query($mysqli, "SELECT * FROM poli");
+                    while ($row_poli = mysqli_fetch_array($ambil_poli)) {
+                        ?>
+                        <option value="<?php echo $row_poli['id']; ?>" <?php if ($idpoli == $row_poli['id'])
+                               echo 'selected="selected"'; ?>>
+                            <?php echo $row_poli['nama_poli']; ?>
+                        </option>
+                        <?php
+                    }
+                    ?>
+                </select>
+            </div>
+        </div>
+
         <div class="row mt-1">
             <label for="inputSandi" class="form-label fw-bold">
                 Sandi Dokter
@@ -157,10 +174,9 @@ if (isset($_GET['aksi'])) {
         </div>
         <div class="row mt-3">
             <div class=col>
-                <button type="submit" class="btn btn-primary rounded-pill px-3 mt-auto" name="simpan" onclick="showNotification()">Simpan</button>
+                <button type="submit" class="btn btn-primary rounded-pill px-3 mt-auto" name="simpan">Simpan</button>
             </div>
         </div>
-        
     </form>
     <br>
     <br>
@@ -173,7 +189,7 @@ if (isset($_GET['aksi'])) {
                 <th scope="col">Nama Dokter</th>
                 <th scope="col">Alamat</th>
                 <th scope="col">No. HP</th>
-                <th scope="col">ID Poli</th>
+                <th scope="col">Nama Poli</th>
                 <th scope="col">NIP</th>
                 <th scope="col">sandi Dokter</th>
                 <th scope="col">Aksi</th>
@@ -201,7 +217,12 @@ if (isset($_GET['aksi'])) {
                         <?php echo $data['no_hp'] ?>
                     </td>
                     <td>
-                        <?php echo $data['id_poli'] ?>
+                        <?php
+                        $id_poli = $data['id_poli'];
+                        $query_poli = mysqli_query($mysqli, "SELECT nama_poli FROM poli WHERE id = '$id_poli'");
+                        $result_poli = mysqli_fetch_assoc($query_poli);
+                        echo $result_poli['nama_poli'];
+                        ?>
                     </td>
                     <td>
                         <?php echo $data['nip'] ?>

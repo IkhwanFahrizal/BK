@@ -7,15 +7,26 @@ if (!isset($_SESSION['nama_pasien'])) {
     header("Location: index.php?page=loginPasien");
     exit;
 }
+
+
+// Pastikan bahwa id_pasien tersedia dalam $_GET sebelum menetapkannya ke $_SESSION['id_pasien']
+// Di halaman daftar_poli.php atau index.php
+if (isset($_GET['id_pasien'])) {
+    $_SESSION['id_pasien'] = $_GET['id_pasien'];
+}
+if (isset($_GET['nama_dokter'])) {
+    $_SESSION['nama_dokter'] = $_GET['nama_dokter'];
+}
+
 ?>
 
 <!DOCTYPE html>
 <html>
 
 <head>
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">Sistem Informasi Rumah Sakit</a>
+            <a class="navbar-brand" href="#">Sistem Informasi Poliklinik</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
                 aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -26,18 +37,18 @@ if (!isset($_SESSION['nama_pasien'])) {
                         <a class="nav-link" aria-current="page" href="index.php">Home</a>
                     </li>
                     <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                                aria-expanded="false">Menu</a>
-                            <ul class="dropdown-menu">
-                                <li>
-                                    <a class="dropdown-item" href="daftar_poli.php?page=dokter">Mendaftar ke Poli</a>
-                                    <!-- <a class="dropdown-item" href="obat.php?page=obat">Obat</a>
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">Menu</a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a class="dropdown-item" href="daftar_poli.php?page=dokter">Mendaftar ke Poli</a>
+                                <!-- <a class="dropdown-item" href="obat.php?page=obat">Obat</a>
                                     <a class="dropdown-item" href="admin.php?page=admin">Admin</a>
                                     <a class="dropdown-item" href="poli.php?page=poli">Poli</a>
                                     <a class="dropdown-item" href="pasien.php?page=pasien">Pasien</a> -->
-                                </li>
-                            </ul>
-                        </li>
+                            </li>
+                        </ul>
+                    </li>
                     <?php
                     if (isset($_SESSION['no_rm'])) {
                         //menu master jika user sudah login
@@ -77,22 +88,24 @@ if (!isset($_SESSION['nama_pasien'])) {
         </div>
     </nav>
 
-    <title>Daftar Poli RS</title>
+    <title>Daftar Poli Poliklinik</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
 <body>
     <div class="container mt-5">
-        <h2>Daftar Poli Rumah Sakit</h2>
+        <h2>Daftar Poli Poliklinik</h2>
 
         <table class="table table-striped">
             <thead>
                 <tr>
                     <th scope="col">No.</th>
-                    <th scope="col">Nama Poli</th>
-                    <th scope="col">Keterangan</th>
-                    <th scope="col">Aksi</th>
+                    <th scope="col">Nama Dokter</th>
+                    <th scope="col">Hari</th>
+                    <th scope="col">Jam Mulai</th>
+                    <th scope="col">Jam Selesai</th>
+                    <th scope="col">Daftar</th>
                 </tr>
             </thead>
             <tbody>
@@ -103,7 +116,10 @@ if (!isset($_SESSION['nama_pasien'])) {
                     die("Koneksi database gagal: " . $mysqli->connect_error);
                 }
 
-                $query = "SELECT * FROM poli"; // Ubah "poli" sesuai dengan nama tabel di database Anda
+                $query = "SELECT jp.*, d.nama_dokter
+                          FROM jadwal_periksa jp
+                          INNER JOIN dokter d ON jp.id_dokter = d.id";
+
                 $stmt = $mysqli->prepare($query);
                 $stmt->execute();
                 $result = $stmt->get_result();
@@ -113,16 +129,18 @@ if (!isset($_SESSION['nama_pasien'])) {
                     while ($row = $result->fetch_assoc()) {
                         echo "<tr>";
                         echo "<td>" . $count . "</td>";
-                        echo "<td>" . htmlspecialchars($row['nama_poli']) . "</td>";
-                        echo "<td>" . htmlspecialchars($row['keterangan']) . "</td>";
-                        echo "<td><a href='mendaftar_poli.php?id=" . $row['id'] . "' class='btn btn-primary'>Daftar</a></td>";
-
-                        // Tambahkan kolom lain jika diperlukan
+                        echo "<td>" . htmlspecialchars($row['nama_dokter']) . "</td>";
+                        echo "<td>" . htmlspecialchars($row['hari']) . "</td>";
+                        echo "<td>" . htmlspecialchars($row['jam_mulai']) . "</td>";
+                        echo "<td>" . htmlspecialchars($row['jam_selesai']) . "</td>";
+                
+                        // Tautan Daftar dengan parameter id
+                        echo "<td><a href='proses_form_keluhan.php?id_jadwal=" . $row['id'] . "&id_pasien=" . (isset($_SESSION['id_pasien']) ? $_SESSION['id_pasien'] : '') . "' class='btn btn-primary'>Daftar</a></td>";
                         echo "</tr>";
                         $count++;
                     }
                 } else {
-                    echo "<tr><td colspan='3'>Tidak ada data poli</td></tr>";
+                    echo "<tr><td colspan='6'>Tidak ada jadwal periksa</td></tr>";
                 }
 
                 $stmt->close();

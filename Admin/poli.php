@@ -1,5 +1,4 @@
 <?php
-
 include_once("../koneksi.php");
 
 if (!isset($_SESSION)) {
@@ -39,9 +38,6 @@ if (isset($_GET['aksi'])) {
                 </script>";
 }
 ?>
-
-<html lang="en">
-
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -141,4 +137,9 @@ if (isset($_GET['aksi'])) {
         </tbody>
     </table>
     <button class="btn btn-dark" onclick="window.location.href='index.php'">Kembali</button>
+    <script>
+        function showNotification() {
+            alert('Data berhasil disimpan!'); 
+        }
+    </script>
 </body>

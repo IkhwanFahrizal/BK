@@ -2,6 +2,12 @@
 if (!isset($_SESSION)) {
     session_start();
 }
+if (isset($_GET['id_pasien'])) {
+    $_SESSION['id_pasien'] = $_GET['id_pasien'];
+}
+
+// Pastikan bahwa id_pasien tersedia dalam $_GET sebelum menetapkannya ke $_SESSION['id_pasien']
+
 
 include_once("../koneksi.php");
 ?>
@@ -12,7 +18,7 @@ include_once("../koneksi.php");
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Sistem Informasi Rumah Sakit</title>
+    <title>Sistem Informasi Poliklinik</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 </head>
@@ -21,7 +27,7 @@ include_once("../koneksi.php");
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">Sistem Informasi Rumah Sakit</a>
+            <a class="navbar-brand" href="#">Sistem Informasi Poliklinik</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-bs-target="#navbarNavDropdown"
                 aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -42,6 +48,10 @@ include_once("../koneksi.php");
                             <ul class="dropdown-menu">
                                 <li>
                                     <a class="dropdown-item" href="daftar_poli.php?page=dokter">Mendaftar ke Poli</a>
+                                    <!-- <a class="dropdown-item" href="obat.php?page=obat">Obat</a>
+                                    <a class="dropdown-item" href="admin.php?page=admin">Admin</a>
+                                    <a class="dropdown-item" href="poli.php?page=poli">Poli</a>
+                                    <a class="dropdown-item" href="pasien.php?page=pasien">Pasien</a> -->
                                 </li>
                             </ul>
                         </li>
@@ -75,6 +85,14 @@ include_once("../koneksi.php");
                     <?php
                 }
                 ?>
+                <!-- <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="index.php?page=registerAdmin">Register</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="index.php?page=loginAdmin">Login</a>
+                </li>
+            </ul> -->
             </div>
         </div>
     </nav>
@@ -85,7 +103,7 @@ include_once("../koneksi.php");
         if (isset($_GET['page'])) {
             include($_GET['page'] . ".php");
         } else {
-            echo "<br><h2>Selamat Datang di Sistem Informasi Rumah Sakit";
+            echo "<br><h2>Selamat Datang di Sistem Informasi Poliklinik";
 
             if (isset($_SESSION['nama_pasien'])) {
                 //jika sudah login tampilkan username

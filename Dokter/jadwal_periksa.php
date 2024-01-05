@@ -1,19 +1,42 @@
 <?php
+// Lakukan pengecekan koneksi ke database dan set session jika belum ada
 if (!isset($_SESSION)) {
     session_start();
 }
 
-// Memasukkan atau mendefinisikan koneksi ke database
+// Sisipkan file koneksi.php
 include_once("../koneksi.php");
 
-if (isset($_SESSION['nip']) && isset($koneksi)) {
+// Inisialisasi variabel $id_dokter
+$id_dokter = null;
+
+// Lakukan query untuk mendapatkan data dokter berdasarkan NIP yang sudah login
+if (isset($_SESSION['nip'])) {
     $nip = $_SESSION['nip'];
-    $query = "SELECT nama_dokter FROM dokter WHERE nip = '$nip'";
-    $result = mysqli_query($koneksi, $query);
-    if ($result) {
-        $row = mysqli_fetch_assoc($result);
-        $nama_dokter = $row['nama_dokter'];
+    $query = "SELECT id FROM dokter WHERE nip = '$nip'";
+    $result = $mysqli->query($query);
+
+    if (!$result) {
+        die("Query error: " . $mysqli->error);
     }
+
+    // Ambil data dokter
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        // Tetapkan nilai $id_dokter jika data dokter ditemukan
+        $id_dokter = $row['id'];
+    } else {
+        echo "Data dokter tidak ditemukan";
+        exit();
+    }
+}
+
+// Query untuk mengambil jadwal periksa dokter yang sedang login
+$query_jadwal = "SELECT hari, jam_mulai, jam_selesai FROM jadwal_periksa WHERE id_dokter = '$id_dokter'";
+$result_jadwal = $mysqli->query($query_jadwal);
+
+if (!$result_jadwal) {
+    die("Query error: " . $mysqli->error);
 }
 ?>
 
@@ -21,16 +44,15 @@ if (isset($_SESSION['nip']) && isset($koneksi)) {
 <html lang="en">
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Sistem Informasi Poliklinik</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jadwal Periksa Dokter</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
 <body>
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">Sistem Informasi Poliklinik</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-bs-target="#navbarNavDropdown"
@@ -99,27 +121,50 @@ if (isset($_SESSION['nip']) && isset($koneksi)) {
             </div>
         </div>
     </nav>
-    <!-- End Navbar -->
 
-    <main role="main" class="container">
-        <?php
-        if (isset($_GET['page'])) {
-            include($_GET['page'] . ".php");
-        } else {
-            echo "<br><h2>Selamat Datang di Sistem Informasi Poliklinik";
-            if (isset($_SESSION['nip'])) {
-                // echo ", " . (isset($nama_dokter) ? $nama_dokter : $_SESSION['nip']) . "</h2><hr>";
-            } else {
-                echo "</h2><hr>Silakan Login untuk menggunakan NIP dan Password yang sudah diberikan oleh Admin, apabila belum memiliki akun silahkan hubungi Admin.";
-            }
-        }
-        ?>
+    <div class="container mt-4">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="text-center">Jadwal Periksa Dokter</h3>
+                    </div>
+                    <div class="card-body">
+                        <?php
+                        if ($result_jadwal->num_rows > 0) {
+                            echo '<table class="table table-hover">';
+                            echo '<thead>';
+                            echo '<tr>';
+                            echo '<th scope="col">Hari</th>';
+                            echo '<th scope="col">Jam Mulai</th>';
+                            echo '<th scope="col">Jam Selesai</th>';
+                            echo '<th scope="col">Cek Antrean Pasien</th>';
+                            echo '</tr>';
+                            echo '</thead>';
+                            echo '<tbody>';
 
-    </main>
+                            while ($row_jadwal = $result_jadwal->fetch_assoc()) {
+                                echo '<tr>';
+                                echo '<td>' . $row_jadwal['hari'] . '</td>';
+                                echo '<td>' . $row_jadwal['jam_mulai'] . '</td>';
+                                echo '<td>' . $row_jadwal['jam_selesai'] . '</td>';
+                                echo "<td><a href='antrean_pasien.php?' class='btn btn-primary'>Cek Antrean</a></td>";
+                                echo '</tr>';
+                            }
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
-        crossorigin="anonymous"></script>
+                            echo '</tbody>';
+                            echo '</table>';
+                        } else {
+                            echo '<p>Tidak ada jadwal periksa yang tersedia</p>';
+                        }
+                        ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>
