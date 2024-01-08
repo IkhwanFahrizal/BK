@@ -115,14 +115,6 @@ if (!$result_daftar_pasien) {
                     <?php
                 }
                 ?>
-                <!-- <ul class="navbar-nav ms-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="index.php?page=registerAdmin">Register</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="index.php?page=loginAdmin">Login</a>
-                </li>
-            </ul> -->
             </div>
         </div>
     </nav>

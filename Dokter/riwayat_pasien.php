@@ -64,7 +64,6 @@ if (isset($_GET['id_pasien'])) {
                                     <a class="dropdown-item" href="atur_jadwal.php?page=atur_jadwal">Atur jadwal poli</a>
                                     <a class="dropdown-item" href="jadwal_periksa.php?page=jadwal_periksa">Jadwal Saya</a>
                                     <a class="dropdown-item" href="riwayat_pasien.php?page=riwayat_pasien">Cari Riwayat Pasien</a>
-                                    <!-- <a class="dropdown-item" href="cari_pasien.php?page=pasien">Cari Pasien</a> -->
                                 </li>
                             </ul>
                         </li>
@@ -99,14 +98,6 @@ if (isset($_GET['id_pasien'])) {
                     <?php
                 }
                 ?>
-                <!-- <ul class="navbar-nav ms-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="index.php?page=registerAdmin">Register</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="index.php?page=loginAdmin">Login</a>
-                </li>
-            </ul> -->
             </div>
         </div>
     </nav>

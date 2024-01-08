@@ -48,10 +48,6 @@ include_once("../koneksi.php");
                             <ul class="dropdown-menu">
                                 <li>
                                     <a class="dropdown-item" href="daftar_poli.php?page=dokter">Mendaftar ke Poli</a>
-                                    <!-- <a class="dropdown-item" href="obat.php?page=obat">Obat</a>
-                                    <a class="dropdown-item" href="admin.php?page=admin">Admin</a>
-                                    <a class="dropdown-item" href="poli.php?page=poli">Poli</a>
-                                    <a class="dropdown-item" href="pasien.php?page=pasien">Pasien</a> -->
                                 </li>
                             </ul>
                         </li>
@@ -85,14 +81,6 @@ include_once("../koneksi.php");
                     <?php
                 }
                 ?>
-                <!-- <ul class="navbar-nav ms-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="index.php?page=registerAdmin">Register</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="index.php?page=loginAdmin">Login</a>
-                </li>
-            </ul> -->
             </div>
         </div>
     </nav>
@@ -103,7 +91,7 @@ include_once("../koneksi.php");
         if (isset($_GET['page'])) {
             include($_GET['page'] . ".php");
         } else {
-            echo "<br><h2>Selamat Datang di Sistem Informasi Poliklinik";
+            echo "<br><h2>Selamat Datang di Sistem Pasien";
 
             if (isset($_SESSION['nama_pasien'])) {
                 //jika sudah login tampilkan username

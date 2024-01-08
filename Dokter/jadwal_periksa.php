@@ -103,21 +103,10 @@ if (!$result_jadwal) {
                         <li class="nav-item">
                             <a class="nav-link" href="index.php?page=loginDokter">Login</a>
                         </li>
-                        <!-- <li class="nav-item">
-                            <a class="nav-link" href="index.php?page=registerDokter">Registrasi Pasien</a>
-                        </li> -->
                     </ul>
                     <?php
                 }
                 ?>
-                <!-- <ul class="navbar-nav ms-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="index.php?page=registerAdmin">Register</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="index.php?page=loginAdmin">Login</a>
-                </li>
-            </ul> -->
             </div>
         </div>
     </nav>

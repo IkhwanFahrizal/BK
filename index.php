@@ -32,9 +32,22 @@
                         <a class="nav-link" aria-current="page" href="Admin/index.php">Login Admin</a>
                     </li>
                 </ul>   
+            </div>
         </div>
     </nav>
     <!-- End Navbar -->
+
+    <!-- Selamat Datang -->
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col">
+                <h1>Selamat Datang di Sistem Informasi Poliklinik</h1>
+                <br><hr>
+                <h3>Silahkan pilih menu diatas</h3>
+            </div>
+        </div>
+    </div>
+    <!-- Akhir Selamat Datang -->
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"

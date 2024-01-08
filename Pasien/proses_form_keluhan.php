@@ -88,9 +88,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit_keluhan'])) {
             $stmt->bind_param("iisi", $id_pasien, $id_jadwal, $keluhan, $no_antrian);
             if ($stmt->execute()) {
                 echo '<script>alert("Keluhan telah disimpan. Nomor Antrian Anda: ' . $no_antrian . '");</script>';
+                echo '<script>window.location.href = "index.php";</script>';
+                exit();
             } else {
                 echo '<script>alert("Terjadi kesalahan: ' . $stmt->error . '");</script>';
             }
+            
             
         } else {
             echo "ID Pasien atau ID Jadwal tidak valid.";
@@ -129,7 +132,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit_keluhan'])) {
 <head>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">RS Wahyu</a>
+            <a class="navbar-brand" href="#">Sistem Informasi Poliklinik</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
                 aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -145,10 +148,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit_keluhan'])) {
                         <ul class="dropdown-menu">
                             <li>
                                 <a class="dropdown-item" href="daftar_poli.php?page=dokter">Mendaftar ke Poli</a>
-                                <!-- <a class="dropdown-item" href="obat.php?page=obat">Obat</a>
-                                    <a class="dropdown-item" href="admin.php?page=admin">Admin</a>
-                                    <a class="dropdown-item" href="poli.php?page=poli">Poli</a>
-                                    <a class="dropdown-item" href="pasien.php?page=pasien">Pasien</a> -->
                             </li>
                         </ul>
                     </li>
@@ -191,7 +190,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit_keluhan'])) {
         </div>
     </nav>
 
-    <title>Daftar Poli Poliklinik</title>
+    <title>Daftar Poli RS</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
@@ -204,7 +203,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit_keluhan'])) {
                 <label for="keluhan" class="form-label">Keluhan anda</label>
                 <textarea class="form-control" id="keluhan" name="keluhan" rows="3" required></textarea>
             </div>
-            <button type="submit" class="btn btn-primary" href="index.php" submit_keluhan">Submit</button>
+            <button type="submit" class="btn btn-primary" name="submit_keluhan">Submit</button>
+            <button class="btn btn-dark" onclick="window.location.href='daftar_poli.php'">Kembali</button>
         </form>
     </div>
 

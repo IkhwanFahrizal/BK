@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Profile Card - Data Pasien</title>
+    <title>Data Pasien</title>
     <style>
         .card {
             border-radius: 18px;

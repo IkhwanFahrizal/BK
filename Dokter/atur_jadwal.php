@@ -69,7 +69,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <body>
 
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">Sistem Informasi Poliklinik</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-bs-target="#navbarNavDropdown"
@@ -94,7 +94,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     <a class="dropdown-item" href="ubah_profil.php?page=ubah_profil">Ubah Profil Dokter</a>
                                     <a class="dropdown-item" href="atur_jadwal.php?page=atur_jadwal">Atur jadwal poli</a>
                                     <a class="dropdown-item" href="jadwal_periksa.php?page=antrean_pasien">Jadwal Saya</a>
-                                    <a class="dropdown-item" href="riwayat_pasien.php?page=riwayat_pasien">Cari Riwayat Pasien</a>                                </li>
+                                    <a class="dropdown-item" href="riwayat_pasien.php?page=riwayat_pasien">Cari Riwayat
+                                        Pasien</a>
+                                </li>
                             </ul>
                         </li>
                         <?php
@@ -108,7 +110,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item">
                             <a class="nav-link" href="Logout.php">Logout
-                                (<?php echo isset($_SESSION['nama_dokter']) ? $_SESSION['nama_dokter'] : $_SESSION['nip'] ?>)
+                                (
+                                <?php echo isset($_SESSION['nama_dokter']) ? $_SESSION['nama_dokter'] : $_SESSION['nip'] ?>)
                             </a>
                         </li>
                     </ul>
@@ -120,21 +123,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <li class="nav-item">
                             <a class="nav-link" href="index.php?page=loginDokter">Login</a>
                         </li>
-                        <!-- <li class="nav-item">
-                            <a class="nav-link" href="index.php?page=registerDokter">Registrasi Pasien</a>
-                        </li> -->
                     </ul>
                     <?php
                 }
                 ?>
-                <!-- <ul class="navbar-nav ms-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="index.php?page=registerAdmin">Register</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="index.php?page=loginAdmin">Login</a>
-                </li>
-            </ul> -->
             </div>
         </div>
     </nav>
@@ -179,7 +171,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     <th scope="col">Hari</th>
                                     <th scope="col">Jam Mulai</th>
                                     <th scope="col">Jam Selesai</th>
-                                    <th scope="col">Aksi</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col">Simpan</th>
+
                                 </tr>
                             </thead>
                             <!--tbody berisi isi tabel sesuai dengan judul atau head-->
@@ -202,14 +196,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                         echo '<td>' . $row_jadwal['jam_mulai'] . '</td>';
                                         echo '<td>' . $row_jadwal['jam_selesai'] . '</td>';
                                         echo '<td>';
-                                        echo '<form method="post" action="hapus_jadwal.php">';
+                                        echo '<form method="post" action="update_status.php">';
                                         echo '<input type="hidden" name="id" value="' . $row_jadwal['id'] . '">';
-                                        echo '<button type="submit" name="delete_jadwal" class="btn btn-danger btn-sm">Hapus</button>';
+                                        echo '<input type="checkbox" name="status_jadwal" value="Y" ' . ($row_jadwal['status_jadwal'] == 'Y' ? 'checked' : '') . '> Aktif';
+                                        echo '<input type="checkbox" name="status_jadwal" value="N" ' . ($row_jadwal['status_jadwal'] == 'N' ? 'checked' : '') . '> Nonaktif';
+                                        echo '</td>';
+                                        echo '<td>';
+                                        echo '<button type="submit" name="update_status" class="btn btn-primary btn-sm">Simpan</button>';
                                         echo '</form>';
                                         echo '</td>';
                                         echo '</tr>';
                                         $count++;
-                                        
                                     }
                                 } else {
                                     echo '<tr><td colspan="5">Tidak ada jadwal periksa yang tersedia</td></tr>';
@@ -224,6 +221,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+        
+        checkboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', function() {
+                // No action needed when checking a box
+                // Logic ensures only one box can be unchecked at a time
+            });
+        });
+    });
+    </script>
+
 </body>
 
 </html>

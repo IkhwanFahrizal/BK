@@ -42,10 +42,6 @@ if (isset($_GET['nama_dokter'])) {
                         <ul class="dropdown-menu">
                             <li>
                                 <a class="dropdown-item" href="daftar_poli.php?page=dokter">Mendaftar ke Poli</a>
-                                <!-- <a class="dropdown-item" href="obat.php?page=obat">Obat</a>
-                                    <a class="dropdown-item" href="admin.php?page=admin">Admin</a>
-                                    <a class="dropdown-item" href="poli.php?page=poli">Poli</a>
-                                    <a class="dropdown-item" href="pasien.php?page=pasien">Pasien</a> -->
                             </li>
                         </ul>
                     </li>
@@ -117,8 +113,8 @@ if (isset($_GET['nama_dokter'])) {
                 }
 
                 $query = "SELECT jp.*, d.nama_dokter
-                          FROM jadwal_periksa jp
-                          INNER JOIN dokter d ON jp.id_dokter = d.id";
+                FROM jadwal_periksa jp
+                INNER JOIN dokter d ON jp.id_dokter = d.id"; 
 
                 $stmt = $mysqli->prepare($query);
                 $stmt->execute();
